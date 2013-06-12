@@ -1,0 +1,1 @@
+Please add brief descriptions for every script you add to this directory.

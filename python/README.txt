@@ -8,3 +8,5 @@ of less than 10 characters.
 parse_FB_output.py: parses the output of FUBAR. Prints the site count (starting with one), then the omega at that site as calculated from alpha and beta.
 
 remove_duplicates.py: removes duplicates from a set of sequences. Removes both identical sequences and identical FASTA identifiers.
+
+translate_align_mapping.py: translates a fasta nucleotide file, aligns the protein sequences, and reverse translates back to the nucelotide sequences.  can output either map or original sequences.  no longer removes duplicate sequences.

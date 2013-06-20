@@ -70,7 +70,6 @@ def main():
   structure = parsePDBStructure( pdb )
   (new_pdb, chain_renumbered_pdb) = renumberResidues( structure )
 
-  filename = remove_duplicate_sequences(filename)
   (ref_seq, aligned_records, MatchingDict) = translate_align_revtranslate(filename, new_pdb)
   
   if(out_form == "seqs"):
@@ -87,50 +86,6 @@ def main():
 
 def remove_values_from_list(the_list, val):
    return [value for value in the_list if value != val]
-
-######################################################################
-## This function is designed to scan for and remove duplicate       ##
-## sequences that may occur in the data, leaving only the first     ##
-## one that is come to in the file.  Although the two sequence      ##
-## may come from different sources, it is not useful                ##
-## to have duplicates.                                              ##
-######################################################################
-
-def remove_duplicate_sequences(filename):
-    print("\n\nStarting Remove Duplicate Sequence Function")
-    input_handle = open(filename, 'rU')
-    records = list(SeqIO.parse(input_handle, "fasta"))
-    input_handle.close()
-
-    outfile = 'tmp_remove_duplicates.txt'
-    output_handle = open(outfile, 'w')
-
-    count = 0
-    a = len(records)
-
-    for i in records:
-        for j in records:
-            if i.id != j.id:
-                if str(i.seq) == str(j.seq):
-                    records.remove(j)
-
-        count = count + 1
-        line = "%i%s" % (a-count, " Remaining")
-        print line
-	
-    count = 0
-    short_sequences = []
-    b = len(records)
-	
-    for k in records:
-        short_sequences.append(k)
-        count  = count + 1			
-        line = "%i" % (b-count)
-        #print line
-			
-    SeqIO.write(short_sequences, output_handle, "fasta")
-    output_handle.close()
-    return outfile
 
 ######################################################################
 ## This function returns the structure attribute of a PDB file      ##

@@ -304,8 +304,6 @@ def output_numerical_map(ref_seq, aligned_records, MatchingDict):
       
       if(len(nuc_seq) == 0):
         nuc_seq = str(j)
-      elif(codon == '---'):
-        nuc_seq = nuc_seq + ',NA'
       else:
         nuc_seq = nuc_seq + "," + str(j)
     
@@ -313,7 +311,7 @@ def output_numerical_map(ref_seq, aligned_records, MatchingDict):
     output_handle.write(line)
 
   print("\n\nThe output file is name: " + outfile + "\n")
-  subprocess.call('rm tmp_*', shell=True)
+  # subprocess.call('rm tmp_*', shell=True)
   return 0
 
 ## Execute the main function

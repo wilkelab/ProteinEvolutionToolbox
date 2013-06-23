@@ -277,7 +277,7 @@ def output_nucleotide_sequences(ref_seq, aligned_records, MatchingDict):
     aa_out_handle.write(line)
 
   print("\n\nThe output file is name: " + outfile + "\n")
-  subprocess.call('rm tmp_*', shell=True)
+  # subprocess.call('rm tmp_*', shell=True)
   return 0
 
 ######################################################################

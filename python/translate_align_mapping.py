@@ -296,17 +296,22 @@ def output_numerical_map(ref_seq, aligned_records, MatchingDict):
     seq = ""
     aa_seq = ""
     nuc_seq = ""
-      
+    count = 1
+    
     for j in range(0, len(ref_seq)):
       #assert ref_seq[j]!="-"
       codon = (MatchingDict[a_record.id])[j][0]
       
-      if(len(nuc_seq) == 0):
-        nuc_seq = str(j)
+      if(codon == '---' and count == 1 and len(nuc_seq) == 0):
+        nuc_seq = 'NA'
+      elif(count == 1 and len(nuc_seq) == 0):
+        nuc_seq = str(count)
+        count += 1
       elif(codon == '---'):
         nuc_seq = nuc_seq + ",NA"
       else:
-        nuc_seq = nuc_seq + "," + str(j)
+        nuc_seq = nuc_seq + "," + str(count)
+        count += 1
     
     line = "%c%s\n%s\n" % (">", a_record.id, nuc_seq)
     output_handle.write(line)

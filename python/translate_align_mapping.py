@@ -302,10 +302,10 @@ def output_numerical_map(ref_seq, aligned_records, MatchingDict):
       assert ref_seq[j]!="-"
       codon = (MatchingDict[a_record.id])[j][0]
       
-      if(codon == '---'):
-        continue
-      elif(len(nuc_seq) == 0):
+      if(len(nuc_seq) == 0):
         nuc_seq = str(j)
+      elif(codon == '---'):
+        nuc_seq = nuc_seq + ',NA'
       else:
         nuc_seq = nuc_seq + "," + str(j)
     

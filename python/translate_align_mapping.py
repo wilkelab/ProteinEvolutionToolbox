@@ -234,13 +234,12 @@ def translate_align_revtranslate( filename, pdb_id ):
       
       for a_codon in range( 0, len(ref_seq) ):
         if ref_seq[a_codon] == "-":
-          dict_codon = MatchingDict[a_record.id].pop( a_codon - seq_counter )
-          seq_counter+=1
+          MatchingDict[a_record.id][a_codon] = ['---', '-']
           
-      assert len(remove_values_from_list(ref_seq, "-")) == len(MatchingDict[a_record.id]), "\nLength mod seq: %s Length of Ref Seq: %s\n" \
+      assert len(ref_seq) == len(MatchingDict[a_record.id]), "\nLength mod seq: %s Length of Ref Seq: %s\n" \
         % (len(remove_values_from_list(ref_seq, "-")), len(MatchingDict[a_record.id]))
     				
-    ref_seq = remove_values_from_list(ref_seq, "-")
+    #ref_seq = remove_values_from_list(ref_seq, "-")
     
     return(ref_seq, aligned_records, MatchingDict)
 
@@ -267,7 +266,7 @@ def output_nucleotide_sequences(ref_seq, aligned_records, MatchingDict):
     aa_seq = ""
       
     for j in range(0, len(ref_seq)):
-      assert ref_seq[j]!="-"
+      #assert ref_seq[j]!="-"
       nuc_seq = nuc_seq + (MatchingDict[a_record.id])[j][0]
       aa_seq  = aa_seq  + (MatchingDict[a_record.id])[j][1]
     
@@ -299,11 +298,13 @@ def output_numerical_map(ref_seq, aligned_records, MatchingDict):
     nuc_seq = ""
       
     for j in range(0, len(ref_seq)):
-      assert ref_seq[j]!="-"
+      #assert ref_seq[j]!="-"
       codon = (MatchingDict[a_record.id])[j][0]
       
       if(len(nuc_seq) == 0):
         nuc_seq = str(j)
+      elif(codon == '---'):
+        nuc_seq = nuc_seq + ",NA"
       else:
         nuc_seq = nuc_seq + "," + str(j)
     

@@ -19,13 +19,13 @@ def main():
     location = str(sys.argv[1])
     distance = str(sys.argv[2])
 
-  files = get_filenames('.', '.pdb')
+  files = get_minimal_filenames('.', '.pdb')
 
   print(files)
 
   for pdb in files:
+    location = pdb + '_opt'
     contacts = [] 
-    location = '1A2K_opt'
     distance = '5'
 
     #parameterize and combine files
@@ -33,24 +33,25 @@ def main():
 
     combined_name = pdb + "_c_b.pdb"
 
-    #for i in range(0, 20):
+    for i in range(0, 1):
 
       #ANM conformational sampling
-      #anm_conf_sampling(combined_name, parsePDB(combined_name))
-      #conf_opt_setup(combined_name)
-      #conf_opt(pdb)
+      anm_conf_sampling(combined_name, parsePDB(combined_name))
+      conf_opt_setup(combined_name)
+      conf_opt(pdb)
 
       #Rename files and get everything in order for contacting counting
-      #coor_files = get_filenames(location, '.coor')
-      #rename_files(location, coor_files, '.pdb')
-      #pdb_files = get_filenames(location, '.pdb')
+      coor_files = get_filenames(location, '.coor')
+      print(coor_files)
+      rename_files(location, coor_files, '.pdb')
+      pdb_files = get_filenames(location, '.pdb')
 
       #Count contacts
-      #num_contacts = get_contacts_files(location, pdb_files, distance)
-      #contacts.append(num_contacts)
-      #print(num_contacts)
+      num_contacts = get_contacts_files(location, pdb_files, distance)
+      contacts.append(num_contacts)
+      print(num_contacts)
 
-    #write_to_file(pdb + '_contacts.txt', contacts, ',')
+    write_to_file(pdb + '_contacts.txt', contacts, ',')
 
 def write_model(filename):
   model_setup = 'package require autopsf\nmol load pdb ' + filename + '\nautopsf -protein ' + filename 
@@ -119,7 +120,7 @@ def anm_conf_sampling(name, pdb):
   structure_anm_ext, structure_all = extendModel(structure_anm, pdb.ca, pdb, norm=True)
 
   #Conformational sampling
-  ens = sampleModes(structure_anm_ext, atoms=pdb.protein, n_confs=4, rmsd=1.0)  
+  ens = sampleModes(structure_anm_ext, atoms=pdb.protein, n_confs=10, rmsd=1.0)  
   pdb.addCoordset(ens.getCoordsets())
   pdb.all.setBetas(0)
   pdb.ca.setBetas(1)
@@ -164,6 +165,7 @@ def conf_opt(name):
   cmds=[]
 
   for conf in glob.glob('*.conf'):
+    inplace_change(conf, 'structure       ../structure', 'structure       ../' + name + '_c_b.psf')
     fn = os.path.splitext(conf)[0]
     cmds.append('namd2 ' + conf + ' > ' + fn + '.log')
 
@@ -183,7 +185,7 @@ def rename_files(location, files, new_extension):
   os.chdir('..')
   return(0)
 
-def get_filenames(location, extension):
+def get_minimal_filenames(location, extension):
   raw_files = os.listdir(location)
  
   files = []
@@ -192,6 +194,16 @@ def get_filenames(location, extension):
       files.append(i[:4])
 
   return(sorted(list(set(files))))
+
+def get_filenames(location, extension):
+  raw_files = os.listdir(location)
+ 
+  files = []
+  for i in raw_files:
+    if i.endswith(extension):
+      files.append(i)
+
+  return(sorted(files))
 
 def get_contacts_files(location, files, distance):
   os.chdir(location)

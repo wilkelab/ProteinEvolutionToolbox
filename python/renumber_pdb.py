@@ -64,19 +64,6 @@ def renumberResidues( structure ):
 
   return (new_pdb, structure)
 
-######################################################################
-## This function will return the amino acid sequence from the PDB   ##
-## file.                                                            ##
-######################################################################
-
-def get_aa_fromPDB( pdb_id ):
-  structure = parsePDBStructure( pdb_id )
-  polypeptides = ""
-  ppb=PPBuilder()
-  for pp in ppb.build_peptides(structure):
-    polypeptides += pp.get_sequence()
-  return polypeptides
-
 ## Execute the main function
 if __name__ == "__main__":
     main()

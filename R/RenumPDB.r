@@ -1,4 +1,5 @@
 ##This code renumbers pdb protein file structure (ATOM data accessible through "pdb_name$atom", which is a matrix table with all the ATOM data info), if inserts are present (numbering of residues has "A","B","C"... in the "inserts" column of "pdb_name$atom". This step is required when using DSSP function because DSSP function takes in the numbering from "resno" column of pdb ATOM data "pdb_name$atom" table, and does not consider the "inserts" column from the same table. That way the "resno" vector has repeating numbering, like this resno <- c(1,2,3,4,4,5,6,7,8,8,9).	
+require(io3d)
 
 #label identities of pbd sturctures present int he alignment "aln". 
 ids <- aln$id

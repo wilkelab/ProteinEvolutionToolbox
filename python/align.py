@@ -141,7 +141,7 @@ def main():
     os.remove('out.fasta')
     os.remove('in.fasta')
     
-    print "\nComplete! Your final protein alignment is in", args.prot_outfile, "and your final nucelotide alignment is in", args.prot_outfile
+    print "\nComplete! Your final protein alignment is in", args.prot_outfile, "and your final nucelotide alignment is in", args.nuc_outfile
 
 main()
 

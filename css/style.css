@@ -2927,8 +2927,8 @@ border-bottom:1px solid #ccc
 .post h2
 {
 font-family:'Raleway';
-font-weight:normal;
-font-size:5em;
+font-weight:bold;
+font-size:4em;
 padding:1.1em 0 0.2em;
 letter-spacing:0.05em;
 color:#81b71a

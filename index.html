@@ -9,15 +9,15 @@ title: Mainpage
     	<div class="row-fluid">
     		<section class="content">
     		  <h1>Wilke Lab Toolbox</h1>
-          <div class="sub-title">This site contains useful information about various methods used in the Wilke Lab.</div>
+          <div class="sub-title">Methodological insights and recommendations from the Wilke Lab <br> Visit our main webpage: <a href="http://wilkelab.org">http://wilkelab.org</a></div>
     		</section>
     		<ul class="entries">
     		{% for post in paginator.posts %}
     		  <li>
     		    <a href="{{ post.url }}">
     		        <h3>{{ post.title }}</h3>
-                <time>{{ post.date | date: "%d %B %Y" }}</time>
-                <div>{{ post.content |truncatehtml | truncatewords: 30 }}</div>
+           <!-- <time>{{ post.date | date: "%d %B %Y" }}</time> -->
+           <!-- <div>{{ post.content |truncatehtml | truncatewords: 30 }}</div> -->
     		    </a>
     		  </li>
     		{% endfor %}

@@ -20,10 +20,10 @@ layout: default
 				</section>
 				<section style="margin-bottom: 2em;">
 					{% if page.previous %} 
-							<a rel="prev" class="a-hover"href="{{ page.previous.url }}"><i class="icon-arrow-left"></i> {{ page.previous.title }}</a>
+							<a rel="prev" class="a-hover"href="{{ site.baseurl }}{{ page.previous.url }}"><i class="icon-arrow-left"></i> {{ page.previous.title }}</a>
 						{% endif %}
 						{% if page.next %} 
-							<a rel="next" style="float:right" class="a-hover"href="{{ page.next.url }}">{{ page.next.title }} <i class="icon-arrow-right"></i></a>
+							<a rel="next" style="float:right" class="a-hover"href="{{ site.baseurl }}{{ page.next.url }}">{{ page.next.title }} <i class="icon-arrow-right"></i></a>
 					{% endif %}
 				</section>
 			</article>

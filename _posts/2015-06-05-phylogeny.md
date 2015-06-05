@@ -1,7 +1,7 @@
 ---
 layout: post_page
 title: Phylogenetic Reconstruction
-permalink: /phylogeny/
+permalink: /ProteinEvolutionToolbox/phylogeny/
 ---
 
 Phylogenetic reconstruction recommendations go here

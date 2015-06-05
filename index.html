@@ -14,7 +14,7 @@ title: Mainpage
     		<ul class="entries">
     		{% for post in paginator.posts %}
     		  <li>
-    		    <a href="{{ post.url }}">
+    		    <a href="{{ site.baseurl }}{{ post.url }}">
     		        <h3>{{ post.title }}</h3>
            <!-- <time>{{ post.date | date: "%d %B %Y" }}</time> -->
            <!-- <div>{{ post.content |truncatehtml | truncatewords: 30 }}</div> -->

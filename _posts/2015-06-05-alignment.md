@@ -1,7 +1,6 @@
 ---
 layout: post_page
 title: Multiple Sequence Alignment
-permalink: /ProteinEvolutionToolbox/alignment/
 ---
 
 Multiple Sequence Alignment recommendations go here

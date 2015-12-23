@@ -1,0 +1,68 @@
+/*----------------------------------------------------------------*/
+// From ReadDelimitedFiles.bf distributed with HyPhy
+
+function splitOnRegExp (string, splitter)
+{
+	matched = string || splitter;
+	splitBits = {};
+	if (matched [0] < 0)
+	{
+		splitBits[0] = string;
+	}
+	else
+	{
+		mc = 0;
+		if (matched[0] == 0)
+		{
+			fromPos = matched[1]+1;
+			mc = 2;
+		}
+		else
+		{
+			fromPos = 0;
+			toPos	= 0;
+		}
+		for (; mc < Rows (matched); mc = mc+2)
+		{
+			toPos = matched[mc]-1;
+			splitBits [Abs(splitBits)] = string[fromPos][toPos];
+			fromPos    = matched[mc+1]+1;
+		}
+		splitBits [Abs(splitBits)] = string[fromPos][Abs(string)-1];
+	}
+	return splitBits;
+}
+
+/*----------------------------------------------------------------*/
+
+function ReadKeyValuePairs(fileName)
+{
+	if (!fileName) // does file exist?
+	{
+		fscanf(fileName, REWIND, "Lines", inData);		
+	}
+	else
+	{
+	    fprintf(stdout, "File ", fileName, " not found. Please enter setup filename.");
+		fscanf(PROMPT_FOR_FILE, REWIND, "Lines", inData);
+	}
+	
+	linesRead = Columns(inData);
+	result = {};
+	
+	for (lineID = 0; lineID < linesRead; lineID = lineID + 1)
+	{
+	    tokens = splitOnRegExp(inData[lineID], " *= *");
+	    command_str = "list = {\""+tokens[0]+"\":\""+tokens[1]+"\"};";
+	    ExecuteCommands(command_str);
+	    result*list; // merges the two associative lists
+	}
+	return result;
+}
+
+function readSetup()
+{
+    setup_file = "setup.txt";
+    setup = ReadKeyValuePairs(setup_file);
+    return setup;
+}

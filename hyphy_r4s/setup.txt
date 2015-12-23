@@ -1,0 +1,3 @@
+INFILE = hyin.txt
+OUTFILE = rates.txt
+MODELFILE = JC_aa.mdl

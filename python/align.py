@@ -1,8 +1,9 @@
-''' SJS 9/24/14.
+""" 
+    SJS 9/24/14.
     Takes in a file of nucleotide sequences, translates, aligns, and returns both a nucleotide and protein alignment.
-    Default aligner is linsi. Output files will be in FASTA format. If you want something else, you're on your own.
+    Default aligner is mafft --auto. Output files will be in FASTA format. If you want something else, you're on your own.
     Usage: python align.py <infile> [optional arguments]. To see optional arguments and full instructions, enter python align.py -h/--help .
-'''
+"""
 
 import os
 import sys
@@ -19,8 +20,8 @@ def parse_args():
     parser.add_argument("infile", metavar = "infile",  type = str, help = "A file containing nucleotide sequences to align. Must be in fasta, phylip, or nexus format.")
     parser.add_argument("-prot_outfile", dest = "prot_outfile", default = "protein.fasta", type = str, help = "Output file for protein alignment.")
     parser.add_argument("-nuc_outfile", dest = "nuc_outfile", default = "nucleotide.fasta", type = str, help = "Output file for nucleotide alignment.")
-    parser.add_argument("-aligner", dest = "aln_exec", default = "linsi", type = str, help="Any mafft algorithm (mafft, linsi, ginsi, einsi...). Default is linsi.")
-    parser.add_argument("-options", dest="aln_opt", default = " --quiet ", type = str, help = "Optional mafft options.")
+    parser.add_argument("-aligner", dest = "aln_exec", default = "mafft --auto", type = str, help="Any mafft algorithm (mafft, linsi, ginsi, einsi...). Default is 'mafft --auto'.")
+    parser.add_argument("-options", dest="aln_opt", default = " --quiet ", type = str, help = "Optional mafft parameters.")
     
     return parser.parse_args()
 
@@ -126,11 +127,11 @@ def main():
             args.infile = None
 
     # Read in sequences and translate to protein
-    print "Reading input sequences"
+    print("Reading input sequences")
     nuc_dict, prot_dict = parse_translate_infile(args.infile)
 
     # Align protein sequences
-    print "Creating protein alignment"
+    print("Creating protein alignment")
     aln_records = align_seqs(args.aln_exec, args.aln_opt, prot_dict, 'in.fasta', 'out.fasta')
 
     # Back-translate protein alignment to nucleotide alignment
@@ -141,7 +142,8 @@ def main():
     os.remove('out.fasta')
     os.remove('in.fasta')
     
-    print "\nComplete! Your final protein alignment is in", args.prot_outfile, "and your final nucelotide alignment is in", args.nuc_outfile
+    outstring = "\nComplete! Your final AA alignment is in " + str( args.prot_outfile) +  " and your final nuc alignment is in " +  str(args.nuc_outfile) +  "\n"
+    print(outstring)
 
 main()
 
